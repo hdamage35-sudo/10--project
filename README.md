@@ -97,10 +97,3 @@ y hacemos una peticion en postman:
 ## Estado
 
 Proyecto completo y funcionando.
-
-```
-
----
-
-Si quieres, puedo también hacerte una versión aún más corta. ¿Te sirve así o lo dejamos más minimal?
-```
