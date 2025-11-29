@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WebSocket Demo</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+<h1>WebSocket Demo</h1>
+
+<input id="msgInput" type="text" placeholder="Escribe un mensaje" />
+<button id="sendBtn">Enviar</button>
+
+<h2>Mensajes recibidos:</h2>
+<ul id="messages"></ul>
+
+<script>
+const socket = io("http://localhost:3000");
+
+const msgInput = document.getElementById("msgInput");
+const sendBtn = document.getElementById("sendBtn");
+const messagesUl = document.getElementById("messages");
+
+sendBtn.onclick = async () => {
+    const msg = msgInput.value;
+    if (!msg) return;
+
+    await fetch("http://localhost:3000/realtime/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        channel: "chat",
+        message: msg,
+    }),
+    });
+
+    msgInput.value = "";
+};
+
+socket.on("chat", (msg) => {
+    const li = document.createElement("li");
+    li.textContent = msg;
+    messagesUl.appendChild(li);
+});
+</script>
+</body>
+</html>
